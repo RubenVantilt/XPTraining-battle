@@ -18,7 +18,7 @@ namespace Battle
         [Theory]
         [InlineData("")]
         [InlineData("        ")]
-        [InlineData(null)]
+        [InlineData(null)] 
         public void construction_ASoldierMustHaveAName_CannotBeBlank(string name)
             => ((Action)(() => new Soldier(name))).ShouldThrow<ArgumentException>();
     }
