@@ -7,16 +7,20 @@ namespace Battle
     public class Army
 
     {
-        public Army()
+        public Army(IHeadQuarters headQuarters)
         {
+            HeadQuarters = headQuarters;
             Soldiers = new List<Soldier>();
         }
 
         public void Enroll(Soldier soldier)
         {
             Soldiers.Add(soldier);
+            var id = HeadQuarters.ReportEnlistment(soldier.Name);
+            soldier.Id = id;
         }
 
+        private IHeadQuarters HeadQuarters { get; set; }
         public List<Soldier> Soldiers { get; set; }
 
         public Soldier Frontman => Soldiers.FirstOrDefault();

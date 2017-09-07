@@ -1,17 +1,24 @@
 ﻿using System;
 using System.Text;
 using FluentAssertions;
+using NSubstitute;
 using Xunit;
 
 namespace Battle.Tests
 {
     public class ArmyTest
     {
+        private IHeadQuarters _iHeadQuarters;
+        public ArmyTest()
+        {
+            _iHeadQuarters = Substitute.For<IHeadQuarters>();
+        }
+
         [Fact]
         public void GivenASoldier_HeCanBeEnrolledInAnArmy()
         {
             Soldier soldier = new Soldier("Soldier name");
-            Army army = new Army();
+            Army army = new Army(_iHeadQuarters);
 
             army.Enroll(soldier);
             army.Soldiers.Should().Contain(soldier);
@@ -22,7 +29,7 @@ namespace Battle.Tests
         {
             Soldier frontManSoldier = new Soldier("Front man");
             Soldier soldier = new Soldier("Soldier");
-            Army army = new Army();
+            Army army = new Army(_iHeadQuarters);
 
             army.Enroll(frontManSoldier);
             army.Enroll(soldier);
@@ -33,8 +40,8 @@ namespace Battle.Tests
         [Fact]
         public void GivenTwoArmiesWithOneSoldier_WhenFightingWar_StrongestFrontManWins()
         {
-            var firstArmy = new Army();
-            var secondArmy = new Army();
+            var firstArmy = new Army(_iHeadQuarters);
+            var secondArmy = new Army(_iHeadQuarters);
 
             var frontmanFirstArmy = new Soldier("Front man first army", Weapon.BAREFIST);
             var frontmanSecondArmy = new Soldier("Front man second army", Weapon.SPEAR);
@@ -50,8 +57,8 @@ namespace Battle.Tests
         [Fact]
         public void GivenTwoArmiesWithOneSoldier_WhenFightingWar_LoserDiesAndIsRemovedFromArmy()
         {
-            var firstArmy = new Army();
-            var secondArmy = new Army();
+            var firstArmy = new Army(_iHeadQuarters);
+            var secondArmy = new Army(_iHeadQuarters);
 
             var frontmanFirstArmy = new Soldier("Front man first army", Weapon.BAREFIST);
             var frontmanSecondArmy = new Soldier("Front man second army", Weapon.SPEAR);
@@ -67,8 +74,8 @@ namespace Battle.Tests
         [Fact]
         public void GivenTwoArmiesWithMoreThanOneSoldier_WhenFightingWar_StrongestArmyWinsBecauseSameWeapons()
         {
-            var firstArmy = new Army();
-            var secondArmy = new Army();
+            var firstArmy = new Army(_iHeadQuarters);
+            var secondArmy = new Army(_iHeadQuarters);
 
             var frontmanFirstArmy = new Soldier("Front man first army", Weapon.SPEAR);
             var secondManFirstArmy = new Soldier("Second man first army", Weapon.BAREFIST);
@@ -96,8 +103,8 @@ namespace Battle.Tests
         [Fact]
         public void GivenTwoArmiesWithMoreThanOneSoldier_WhenFightingWar_StrongestArmyWinsBecauseStrongerWeapons()
         {
-            var firstArmy = new Army();
-            var secondArmy = new Army();
+            var firstArmy = new Army(_iHeadQuarters);
+            var secondArmy = new Army(_iHeadQuarters);
 
             var frontmanFirstArmy = new Soldier("Front man first army", Weapon.AXE);
             var secondManFirstArmy = new Soldier("Second man first army", Weapon.AXE);
@@ -120,6 +127,27 @@ namespace Battle.Tests
             var winningArmy = firstArmy.Attack(secondArmy);
 
             winningArmy.Should().Be(firstArmy);
+        }
+
+        [Fact]
+        public void GivenSoldier_WhenSoldierGetsEnlisted_ThisGetsReportedToHeadQuarters()
+        {
+            Soldier soldier = new Soldier("Soldier");
+            Army army = new Army(_iHeadQuarters);
+            army.Enroll(soldier);
+
+            _iHeadQuarters.Received().ReportEnlistment("Soldier");
+        }
+
+        [Fact]
+        public void GivenSoldier_WhenSoldierGetsEnlisted_SoldierGetsId()
+        {
+            Soldier soldier = new Soldier("Soldier");
+            Army army = new Army(_iHeadQuarters);
+            _iHeadQuarters.ReportEnlistment("Soldier").Returns(99);
+            army.Enroll(soldier);
+
+            soldier.Id.Should().Be(99);
         }
     }
 }
