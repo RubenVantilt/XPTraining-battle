@@ -63,5 +63,63 @@ namespace Battle.Tests
 
             firstArmy.Soldiers.Should().BeEmpty();
         }
+
+        [Fact]
+        public void GivenTwoArmiesWithMoreThanOneSoldier_WhenFightingWar_StrongestArmyWinsBecauseSameWeapons()
+        {
+            var firstArmy = new Army();
+            var secondArmy = new Army();
+
+            var frontmanFirstArmy = new Soldier("Front man first army", Weapon.SPEAR);
+            var secondManFirstArmy = new Soldier("Second man first army", Weapon.BAREFIST);
+            var thirdManFirstArmy = new Soldier("Third man first army", Weapon.BAREFIST);
+
+            firstArmy.Enroll(frontmanFirstArmy);
+            firstArmy.Enroll(secondManFirstArmy);
+            firstArmy.Enroll(thirdManFirstArmy);
+
+            var frontmanSecondArmy = new Soldier("Front man second army", Weapon.BAREFIST);
+            var secondManSecondArmy = new Soldier("Second man second army", Weapon.SPEAR);
+            var thirdManSecondArmy = new Soldier("Third man second army", Weapon.SPEAR);
+
+           
+
+            secondArmy.Enroll(frontmanSecondArmy);
+            secondArmy.Enroll(secondManSecondArmy);
+            secondArmy.Enroll(thirdManSecondArmy);
+
+            var winningArmy = firstArmy.Attack(secondArmy);
+
+            winningArmy.Should().Be(firstArmy);
+        }
+
+        [Fact]
+        public void GivenTwoArmiesWithMoreThanOneSoldier_WhenFightingWar_StrongestArmyWinsBecauseStrongerWeapons()
+        {
+            var firstArmy = new Army();
+            var secondArmy = new Army();
+
+            var frontmanFirstArmy = new Soldier("Front man first army", Weapon.AXE);
+            var secondManFirstArmy = new Soldier("Second man first army", Weapon.AXE);
+            var thirdManFirstArmy = new Soldier("Third man first army", Weapon.AXE);
+
+            firstArmy.Enroll(frontmanFirstArmy);
+            firstArmy.Enroll(secondManFirstArmy);
+            firstArmy.Enroll(thirdManFirstArmy);
+
+            var frontmanSecondArmy = new Soldier("Front man second army", Weapon.BAREFIST);
+            var secondManSecondArmy = new Soldier("Second man second army", Weapon.SPEAR);
+            var thirdManSecondArmy = new Soldier("Third man second army", Weapon.SPEAR);
+
+
+
+            secondArmy.Enroll(frontmanSecondArmy);
+            secondArmy.Enroll(secondManSecondArmy);
+            secondArmy.Enroll(thirdManSecondArmy);
+
+            var winningArmy = firstArmy.Attack(secondArmy);
+
+            winningArmy.Should().Be(firstArmy);
+        }
     }
 }

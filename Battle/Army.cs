@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Battle
@@ -18,22 +19,41 @@ namespace Battle
 
         public List<Soldier> Soldiers { get; set; }
 
-        public Soldier Frontman => Soldiers.First();
+        public Soldier Frontman => Soldiers.FirstOrDefault();
 
         public Army Attack(Army secondArmy)
         {
-            var winningFrontman = Frontman.Fight(secondArmy.Frontman);
-            if (! isOurFrontman(winningFrontman))
+            while (ThereIsAFrontman(Frontman) && ThereIsAFrontman(secondArmy.Frontman))
             {
-                this.RemoveDeadSoldier(Frontman);
-                return secondArmy;
+                var winningFrontman = Frontman.Fight(secondArmy.Frontman);
+                if (!isOurFrontman(winningFrontman))
+                {
+                    this.RemoveDeadSoldier(Frontman);
+                }
+                else
+                {
+                    secondArmy.RemoveDeadSoldier(secondArmy.Frontman);
+                }
+            }
+
+            return CheckWinningTeam(secondArmy);
+        }
+
+        private Army CheckWinningTeam( Army secondArmy)
+        {
+            if( Soldiers.Count > secondArmy.Soldiers.Count)
+            {
+                return this;
             }
             else
             {
-                secondArmy.RemoveDeadSoldier(secondArmy.Frontman);
-                return this;
+                return secondArmy;
             }
+        }
 
+        private bool ThereIsAFrontman(Soldier frontman)
+        {
+            return frontman != null;
         }
 
         private bool isOurFrontman(Soldier soldier)
