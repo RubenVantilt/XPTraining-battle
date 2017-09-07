@@ -13,6 +13,7 @@ namespace Battle
 
         public string Name { get; }
         public Weapon Weapon { get; set; }
+        public int Id { get; set; }
 
         private void ValidateNameisNotBlank(string name)
         {
