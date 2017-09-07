@@ -26,11 +26,7 @@ namespace Battle
 
         public Soldier Fight(Soldier attackedOne)
         {
-            if (this.Weapon.AmountOfDamage >= attackedOne.Weapon.AmountOfDamage)
-            {
-                return this;
-            }
-            return attackedOne;
+            return SoldierFightComparer.GetWinner(this, attackedOne);
         }
     }
 }

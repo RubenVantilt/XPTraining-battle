@@ -7,6 +7,7 @@ namespace Battle
     public class Weapon
     {
         private WeaponType weaponType;
+
         public Weapon(int weapon)
         {
 
@@ -21,6 +22,9 @@ namespace Battle
         public const int AXE = 1;
         public const int SWORD = 2;
         public const int SPEAR = 3;
-
+        public const int TWO_HANDED_SWORD = 4;
+        public const int BROAD_AXE = 5;
+        public const int TRIDENT = 6;
+        public const int MAGIC_POTION = 7;
     }
 }

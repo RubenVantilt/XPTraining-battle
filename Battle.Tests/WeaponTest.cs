@@ -13,6 +13,7 @@ namespace Battle.Tests
         [InlineData(Weapon.AXE, 3)]
         [InlineData(Weapon.SWORD, 2)]
         [InlineData(Weapon.SPEAR, 2)]
+        [InlineData(Weapon.TRIDENT, 6)]
         public void Weapon_whenCreated_thenShouldHaveCorrectAmountOfDamage(int weaponType, int expectedAmountOfDamage)
         {
             Weapon weapon = new Weapon(weaponType);
