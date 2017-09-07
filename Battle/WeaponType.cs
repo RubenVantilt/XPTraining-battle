@@ -29,10 +29,32 @@ namespace Battle
             }
             return weaponType;
         }
+
+        public abstract int Damage { get; }
     }
 
-    class BareFist : WeaponType { }
-    class Axe : WeaponType { }
-    class Sword : WeaponType { }
-    class Spear : WeaponType { }
+    class BareFist : WeaponType {
+        public override int Damage
+        {
+            get { return 1; }
+        }
+    }
+    class Axe : WeaponType {
+        public override int Damage
+        {
+            get { return 3; }
+        }
+    }
+    class Sword : WeaponType {
+        public override int Damage
+        {
+            get { return 2; }
+        }
+    }
+    class Spear : WeaponType {
+        public override int Damage
+        {
+            get { return 2; }
+        }
+    }
 }

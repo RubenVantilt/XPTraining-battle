@@ -11,9 +11,11 @@ namespace Battle
         {
 
             weaponType = WeaponType.NewType(weapon);
+            AmountOfDamage = weaponType.Damage;
         }
 
         public WeaponType WeaponType { get { return weaponType; } }
+        public int AmountOfDamage { get; }
 
         public const int BAREFIST = 0;
         public const int AXE = 1;
