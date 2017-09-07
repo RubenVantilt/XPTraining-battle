@@ -15,6 +15,13 @@ namespace Battle
             soldier.Name.Should().Be("soldier name");
         }
 
+        [Fact]
+        public void construction_TestBuild()
+        {
+            var booleanValue = false;
+            booleanValue.Should().BeTrue();
+        }
+
         [Theory]
         [InlineData("")]
         [InlineData("        ")]
