@@ -14,6 +14,9 @@ namespace Battle.Tests
         [InlineData(Weapon.MAGIC_POTION, Weapon.SPEAR, 1)]
         [InlineData(Weapon.AXE, Weapon.SPEAR, 1)]
         [InlineData(Weapon.BROAD_AXE, Weapon.BAREFIST, 1)]
+        [InlineData(Weapon.AXE, Weapon.TRIDENT, 1)]
+        [InlineData(Weapon.SPEAR, Weapon.TWO_HANDED_SWORD, 1)]
+        [InlineData(Weapon.SWORD, Weapon.BROAD_AXE, 1)]
         public void GetWinner_whenTwoSoldiersAreCompared_thenRightSoldierShouldWin(int weaponTypeAttacker,
             int weaponTypeOpponent, int expectedWinner)
         {

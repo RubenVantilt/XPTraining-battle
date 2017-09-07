@@ -8,34 +8,41 @@ namespace Battle
     {
         public static Soldier GetWinner(Soldier attacker, Soldier opponent)
         {
-            int opponentDamage = 0;
-            int attackerDamage = 0;
-
-            if (attacker.Weapon.WeaponType.GetType() == opponent.Weapon.WeaponType.GetType())
+            if (GetWeaponType(attacker) == GetWeaponType(opponent))
             {
                 return attacker;
             }
 
-            if (attacker.Weapon.WeaponType.GetType() == typeof(MagicPotion))
-            {
-                opponentDamage = opponent.Weapon.AmountOfDamage;
-                attackerDamage = CalculateMagicPotionDamage(opponentDamage);
-            }
-            else if (opponent.Weapon.WeaponType.GetType() == typeof(MagicPotion))
-            {
-                attackerDamage = attacker.Weapon.AmountOfDamage;
-                opponentDamage = CalculateMagicPotionDamage(attackerDamage);
-            }
-            else
-            {
-                attackerDamage = attacker.Weapon.AmountOfDamage;
-                opponentDamage = opponent.Weapon.AmountOfDamage;
-            }
+            var damages = CalculateDamages(attacker, opponent);
 
-            if (attackerDamage >= opponentDamage)
+            if (damages.AttackerDamage >= damages.OpponentDamage)
                 return attacker;
 
             return opponent;
+        }
+
+        private static Damages CalculateDamages(Soldier attacker, Soldier opponent)
+        {
+            var damages = new Damages();
+
+            damages.AttackerDamage = attacker.Weapon.AmountOfDamage;
+            damages.OpponentDamage = opponent.Weapon.AmountOfDamage;
+
+            if (GetWeaponType(attacker) == typeof(MagicPotion))
+            {
+                damages.AttackerDamage = CalculateMagicPotionDamage(damages.OpponentDamage);
+            }
+            else if (GetWeaponType(opponent) == typeof(MagicPotion))
+            {
+                damages.OpponentDamage = CalculateMagicPotionDamage(damages.AttackerDamage);
+            }
+
+            return damages;
+        }
+
+        private static Type GetWeaponType(Soldier soldier)
+        {
+            return soldier.Weapon.WeaponType.GetType();
         }
 
         private static int CalculateMagicPotionDamage(int opponentDamage)
