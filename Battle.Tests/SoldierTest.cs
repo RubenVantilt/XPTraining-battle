@@ -31,5 +31,15 @@ namespace Battle
 
             soldier.Weapon.WeaponType.Should().BeOfType<BareFist>();
         }
+
+        [Fact]
+        public void Soldier_isEquippedWithAxe_ThenWeaponIsAxe()
+        {
+            Soldier soldier = new Soldier("soldier name", Weapon.AXE);
+
+            soldier.Weapon.Should().NotBeNull();
+
+            soldier.Weapon.WeaponType.Should().BeOfType<Axe>();
+        }
     }
 }

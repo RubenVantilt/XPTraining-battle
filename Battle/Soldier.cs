@@ -4,11 +4,11 @@ namespace Battle
 {
     public class Soldier
     {
-        public Soldier(string name)
+        public Soldier(string name, int weapon = 0)
         {
             ValidateNameisNotBlank(name);
             Name = name;
-            Weapon = new Weapon();
+            Weapon = new Weapon(weapon);
         }
 
         private void ValidateNameisNotBlank(string name)

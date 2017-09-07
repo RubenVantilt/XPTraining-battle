@@ -7,11 +7,18 @@ namespace Battle
     public class Weapon
     {
         private WeaponType weaponType;
-        public Weapon()
+        public Weapon(int weapon)
         {
-            weaponType = new BareFist();
+
+            weaponType = WeaponType.NewType(weapon);
         }
 
         public WeaponType WeaponType { get { return weaponType; } }
+
+        public const int BAREFIST = 0;
+        public const int AXE = 1;
+        public const int SWORD = 2;
+        public const int SPEAR = 3;
+
     }
 }
