@@ -14,7 +14,7 @@ namespace Battle
         {
             if (IsBlank(name))
             {
-                throw new ArgumentException("name can not be blank"); 
+                throw new ArgumentException("name can not be blank");
             }
         }
 
