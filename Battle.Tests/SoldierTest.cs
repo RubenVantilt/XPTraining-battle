@@ -10,9 +10,9 @@ namespace Battle
         [Fact]
         public void construction_ASoldierMustHaveAName()
         {
-            Soldier soldier = new Soldier("name");
+            Soldier soldier = new Soldier("soldier name");
 
-            soldier.Name.Should().Be("name");
+            soldier.Name.Should().Be("soldier name");
         }
 
         [Theory]
