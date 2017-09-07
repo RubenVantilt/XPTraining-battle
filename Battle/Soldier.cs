@@ -11,6 +11,9 @@ namespace Battle
             Weapon = new Weapon(weapon);
         }
 
+        public string Name { get; }
+        public Weapon Weapon { get; set; }
+
         private void ValidateNameisNotBlank(string name)
         {
             if (IsBlank(name))
@@ -20,8 +23,14 @@ namespace Battle
         }
 
         private bool IsBlank(string name) => string.IsNullOrEmpty(name?.Trim());
-        
-        public string Name { get; }
-        public Weapon Weapon { get;  set; }
+
+        public Soldier Fight(Soldier attackedOne)
+        {
+            if (this.Weapon.AmountOfDamage >= attackedOne.Weapon.AmountOfDamage)
+            {
+                return this;
+            }
+            return attackedOne;
+        }
     }
 }

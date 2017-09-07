@@ -41,5 +41,27 @@ namespace Battle
 
             soldier.Weapon.WeaponType.Should().BeOfType<Axe>();
         }
+
+        [Fact]
+        public void GivenASoldier_WhenTwoSoldiersWithUnequalWeaponDamageFight_TheStrongestOneWins()
+        {
+            Soldier attacker = new Soldier("Attacker", 0);
+            Soldier attackedOne = new Soldier("Attacked one", 3);
+
+            Soldier winner = attacker.Fight(attackedOne);
+
+            winner.Should().Be(attackedOne);
+        }
+
+        [Fact]
+        public void GivenASoldier_WhenTwoSoldiersWithEqualWeaponDamageFight_TheAttackerWins()
+        {
+            Soldier attacker = new Soldier("Attacker", 0);
+            Soldier attackedOne = new Soldier("Attacked one", 0);
+
+            Soldier winner = attacker.Fight(attackedOne);
+
+            winner.Should().Be(attacker);
+        }
     }
 }
