@@ -39,8 +39,10 @@ namespace Battle
                     secondArmy.RemoveDeadSoldier(secondArmy.Frontman);
                 }
             }
+            var winningArmy = CheckWinningTeam(secondArmy);
 
-            return CheckWinningTeam(secondArmy);
+            HeadQuarters.ReportVictory(winningArmy.Soldiers.Count);
+            return winningArmy;
         }
 
         private Army CheckWinningTeam( Army secondArmy)
@@ -65,8 +67,9 @@ namespace Battle
             return Frontman == soldier;
         }
 
-        private void RemoveDeadSoldier(Soldier deadSoldier)
+        public void RemoveDeadSoldier(Soldier deadSoldier)
         {
+            HeadQuarters.ReportCasualty(deadSoldier.Id);
             Soldiers.Remove(deadSoldier);
         }
     }

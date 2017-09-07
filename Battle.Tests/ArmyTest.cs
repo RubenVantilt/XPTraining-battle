@@ -149,5 +149,37 @@ namespace Battle.Tests
 
             soldier.Id.Should().Be(99);
         }
+
+        [Fact]
+        public void GivenSoldier_WhenSoldierDies_ThisGetsReportedToHeadQuarters()
+        {
+            Soldier soldier = new Soldier("Soldier");
+            Army army = new Army(_iHeadQuarters);
+
+            _iHeadQuarters.ReportEnlistment("Soldier").Returns(99);
+            army.Enroll(soldier);
+            army.RemoveDeadSoldier(soldier);
+
+            _iHeadQuarters.Received().ReportCasualty(soldier.Id);
+        }
+
+        [Fact]
+        public void GivenArmy_WhenArmyWins_ThisGetsReportedToHeadQuarters()
+        {
+            var firstArmy = new Army(_iHeadQuarters);
+            var secondArmy = new Army(_iHeadQuarters);
+
+            var frontmanFirstArmy = new Soldier("Front man first army", Weapon.BAREFIST);
+            var frontmanSecondArmy = new Soldier("Front man second army", Weapon.SPEAR);
+
+            firstArmy.Enroll(frontmanFirstArmy);
+            secondArmy.Enroll(frontmanSecondArmy);
+
+            firstArmy.Attack(secondArmy);
+
+            _iHeadQuarters.Received().ReportVictory(secondArmy.Soldiers.Count);
+        }
+
+
     }
 }
